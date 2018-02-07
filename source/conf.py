@@ -105,11 +105,11 @@ html_theme_options = {
 html_static_path = ['_static']
 
 # Override CSS to fix tables not wrapping
-html_context = {
-    'css_files': [
-        '_static/theme_overrides.css'
-    ]
-}
+#html_context = {
+#    'css_files': [
+#        '_static/theme_overrides.css'
+#    ]
+#}
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
