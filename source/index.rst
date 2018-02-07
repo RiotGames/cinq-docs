@@ -14,10 +14,9 @@ Getting started
     quickstart
     local-development/index
     userguide
+    overview/index
     contributing
     contributors
-    code/backend
-    code/frontend
 
 External resources
 ------------------

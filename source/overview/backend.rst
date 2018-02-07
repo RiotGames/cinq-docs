@@ -10,7 +10,7 @@ the original codebase.
 API Server
 ----------
 
-The API server provides a RESTful interface for the `frontend <https://www.github.com/riotgames/inquisitor/frontend>`_ 
+The API server provides a RESTful interface for the `frontend <https://github.com/riotgames/inquisitor/frontend>`__
 web client.
 
 Authentication
@@ -29,7 +29,7 @@ for local development to ensure proper testing of the SAML code.
 More information can be found at:
 
 * `Saml <https://github.com/RiotGames/cinq-auth-onelogin-saml>`_
-* `Local <https://github.com/RiotGames/cinq-auth-local/blob/master/README.rst>`_
+* `Local <https://github.com/RiotGames/cinq-auth-local/blob/master/README.rst>`__
 
 Auditors
 --------
@@ -39,54 +39,58 @@ Auditors are plugins which will alert and potentially take action based on data 
 Cloudtrail
 ^^^^^^^^^^
 
-The CloudTrail `auditor <https://github.com/RiotGames/cinq-auditor-cloudtrail>`_  will ensure that CloudTrail 
+The CloudTrail `auditor <https://github.com/RiotGames/cinq-auditor-cloudtrail>`__ will ensure that CloudTrail 
 has been enabled for all accounts configured in the system. The system will automatically create an S3 bucket 
 and SNS topics for log delivery notifications. However, you must ensure that the proper access has been 
 granted to the accounts attempting to log to a remote S3 bucket. SNS subscriptions will need to be confirmed 
 through an external tool such as the CloudTrail app.
 
-More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-cloudtrail/blob/master/README.rst>`_.
+More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-cloudtrail/blob/master/README.rst>`__.
 
 Domain Hijacking
 ^^^^^^^^^^^^^^^^
 
-The domain hijacking `auditor <https://github.com/RiotGames/cinq-auditor-domain-hijacking>`_ will attempt to 
+The domain hijacking `auditor <https://github.com/RiotGames/cinq-auditor-domain-hijacking>`__ will attempt to 
 identify misconfigured DNS entries that would potentially result in third parties being able to take over 
 legitimate DNS names and serve malicious content from a real location.
 
 This auditor will fetch information from AWS Route53, CloudFlare, and our internal F5 based DNS servers and 
 validate the records found against our known owned S3 buckets, Elastic BeanStalks, and CloudFront CDN distributions.
 
-More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-domain-hijacking/blob/master/README.rst>`_.
+More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-domain-hijacking/blob/master/README.rst>`__.
 
 IAM
 ^^^
 
-The IAM roles and policy `auditor <https://github.com/RiotGames/cinq-auditor-iam>`_ will audit, and if enabled, 
+The IAM roles and policy `auditor <https://github.com/RiotGames/cinq-auditor-iam>`__ will audit, and if enabled, 
 manage the default Riot IAM policies and roles.
 
-More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-iam/blob/master/README.rst>`_.
+More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-iam/blob/master/README.rst>`__.
 
 Required Tags
 ^^^^^^^^^^^^^
 
-Cloud Inquisitor `audits <https://github.com/RiotGames/cinq-auditor-required-tags>`_ EC2 instances for **tagging compliance** 
+Cloud Inquisitor `audits <https://github.com/RiotGames/cinq-auditor-required-tags>`__ EC2 instances for **tagging compliance** 
 and shutdowns or terminates instances if they are not brought into compliance after a pre-defined amount of time.
 
-More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-required-tags/blob/master/README.rst>`_.
+More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-required-tags/blob/master/README.rst>`__.
 
 **Note:** This is currently being extended to include all taggable AWS objects.
 
 Default Action Schedule
-^^^^^^^^^^^^^^^^^^^^^^^
+_______________________
 
 +----------+-------------------------------------------------------------------------------------------+
 | Age      | Action                                                                                    |
-+----------+-------------------------------------------------------------------------------------------+
++==========+===========================================================================================+
 | 0 days   | Alert the AWS account owner via email.                                                    |
++----------+-------------------------------------------------------------------------------------------+
 | 21 days  | Alert the AWS account owner, warning that shutdown of instance(s) will happen in one week |
++----------+-------------------------------------------------------------------------------------------+
 | 27 days  | Alert the AWS account owner, warning shutdown of instance(s) will happen in one day       |
++----------+-------------------------------------------------------------------------------------------+
 | 28 days  | Shutdown instance(s) and notify AWS account owner                                         |
++----------+-------------------------------------------------------------------------------------------+
 | 112 days | Terminate the instance and notify AWS account owner                                       |
 +----------+-------------------------------------------------------------------------------------------+
 
@@ -99,15 +103,15 @@ database state.
 AWS
 ^^^
 
-The base AWS `collector <https://github.com/RiotGames/cinq-collector-aws>`_ queries all regions for every account 
+The base AWS `collector <https://github.com/RiotGames/cinq-collector-aws>`__ queries all regions for every account 
 collecting information for all regions in each AWS account.
 
-A more detailed description is available `here <https://github.com/RiotGames/cinq-collector-aws/blob/master/README.rst>`_.
+A more detailed description is available `here <https://github.com/RiotGames/cinq-collector-aws/blob/master/README.rst>`__.
 
 DNS
 ^^^
 
-The DNS `collector <https://github.com/RiotGames/cinq-collector-dns>`_ gathers and collates all related DNS information, 
+The DNS `collector <https://github.com/RiotGames/cinq-collector-dns>`__ gathers and collates all related DNS information, 
 with which the relevant DNS auditors can analyse for potential security issues.
 
-A more detailed description is available `here <https://github.com/RiotGames/cinq-collector-dns/blob/master/README.rst>`_.
+A more detailed description is available `here <https://github.com/RiotGames/cinq-collector-dns/blob/master/README.rst>`__.
