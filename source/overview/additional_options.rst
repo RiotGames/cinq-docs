@@ -1,5 +1,8 @@
+Additional Options
+==================
+
 Databases
-=========
+---------
 
 cinq is currently designed to run with MySQL Version 5.7.17. We recommend you stick to this version.
 
@@ -26,7 +29,7 @@ You can look in /path/to/cinq-backend/logs/ to see if you have any configuration
 
 
 KMS and UserData
-================
+----------------
 
 You may not wish to keep database credentials in flat configuration files on the instance. You can KMS encrypt these variables and pass them to the cinq instance
 via AWS userdata. In your variables file use the following ::
@@ -50,7 +53,7 @@ To verify your cinq instance is using KMS, your production settings in ``/path/t
 
 
 Authentication Systems
-======================
+^^^^^^^^^^^^^^^^^^^^^^
 
 Cinq supports built-in authentication system (default), as well as federation authentication with OneLogin IdP via SAML.
 It's possible that other IdPs can be used but this has not been tested.
@@ -79,13 +82,13 @@ To switch back to local Auth simply execute ::
 
 
 Additional Customization
-========================
+------------------------
 
 In the packer directory, the build.json contains other parameters that you can modify at your discretion.
 
 
 Packer Settings
----------------
+^^^^^^^^^^^^^^^
 
 * ``aws_access_key`` - Access Key ID to use. Default: `AWS_ACCESS_KEY_ID` environment variable
 * ``aws_secret_key`` - Secret Key ID to use. Default: `AWS_SECRET_ACCESS_KEY` environment variable
@@ -99,7 +102,7 @@ Packer Settings
 
 
 Installer Settings
-------------------
+^^^^^^^^^^^^^^^^^^
 
 * ``git_branch`` - Specify the branch to build Default: `master`
 * ``tmp_base`` - Base folder for temporary files during installation, will be created if missing. Must be writable by the default ssh user. Default: `/tmp/packer`
@@ -110,18 +113,18 @@ Installer Settings
 * ``app_apt_upgrade`` - Run `apt-get upgrade` as part of the build process. Default: `True`
 
 Common Settings
----------------
+^^^^^^^^^^^^^^^
 
 * ``app_debug`` - Run Flask in debug mode. Default: `False`
 
 Frontend Settings
------------------
+^^^^^^^^^^^^^^^^^
 
 * ``app_frontend_api_path`` - Absolute path for API location. Default: `/api/v1`
 * ``app_frontend_login_url`` - Absolute path for SAML Login redirect URL. Default: `/saml/login`
 
 Backend Settings
-----------------
+^^^^^^^^^^^^^^^^
 
 * ``app_db_uri`` - **IMPORTANT:** Database connection URI. Example: ``mysql://cinq:changeme@localhost:3306/cinq``
 * ``app_db_setup_local`` - This tells the builder to install and configure a local mysql database. Default - null
@@ -138,5 +141,5 @@ Backend Settings
 * ``app_user_data_url`` - URL where user data is access. Default: ``http://169.254.169.254/latest/user-data``
 
 FYI
----
+^^^
 The vast majority of these settings should be left at their default values unless you fell you must change them to get cinq running.

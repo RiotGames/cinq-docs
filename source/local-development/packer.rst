@@ -78,10 +78,13 @@ or from within the _supervisorctl_ prompt
 
 * ``supervisor> stop cinq-scheduler``
 
-which results in:: bash supervisor> status
+which results in
+
+::
+
+    bash supervisor> status
     cinq                   RUNNING    pid 1168, uptime 0:04:52
     cinq-scheduler         STOPPED    Oct 13 05:32 PM
-    ```
 
 Once you have verified that everything is running as expected you can terminate the EC2 Instance.
 
