@@ -92,6 +92,7 @@ The frontend will now be available on https://localhost:8443
 After adding the account, configure the IAM Role you will use
 
 ::
+
    Config -> role_name
 
 8. Start the standalone scheduler:
@@ -167,16 +168,20 @@ Mount your plugins on ``/plugins/plugin-name`` inside the container.  The setup 
       - "./../../cinq-auditor-iam:/plugins/cinq-auditor-iam"
       - "./../../cinq-auditor-example2:/plugins/cinq-auditor-example2"	
       # Change the above path to the plugin to fit your directory structure
+
     command: >
       bash -c " source /env/bin/activate;
 
-      [ -d /plugins ] && cd /plugins 
-      && for plugin in `ls /plugins`; do 
-             pushd $$plugin && python3 setup.py install && popd;  
-         done;
-
       cd /cloud-inquisitor/backend
-      && python setup.py install > /dev/null
+      && python setup.py clean --all install > /dev/null;
+
+      if [ -d /plugins ]; then
+         cd /plugins;
+         for plugin in `ls /plugins`; do 
+             (cd $$plugin && python3 setup.py clean --all install)
+         done;
+      fi
+
       && cloud-inquisitor runserver -h 0.0.0.0 -p 5000;"
     depends_on:
       - base
@@ -210,3 +215,4 @@ Tips
   * You can view individual logs by running ``docker-compose logs <db|api|scheduler|frontend|nginx>``
   * You can follow the logs by adding the ``-f`` flag
 * Don't forget to save your admin password
+* Changing the ``docker-compose.yml`` ``commmand`` requires you to kill the container and bring it back up
