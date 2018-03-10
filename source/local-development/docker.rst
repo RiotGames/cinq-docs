@@ -212,7 +212,7 @@ Tips
 * To stop all services run ``docker-compose down``
 * To stop an individual service run ``docker-compose kill <db|api|scheduler|frontend|nginx>``
 * To view logs run ``docker-compose logs``
-  * You can view individual logs by running ``docker-compose logs <db|api|scheduler|frontend|nginx>``
-  * You can follow the logs by adding the ``-f`` flag
+    * You can view individual logs by running ``docker-compose logs <db|api|scheduler|frontend|nginx>``
+    * You can follow the logs by adding the ``-f`` flag
 * Don't forget to save your admin password
 * Changing the ``docker-compose.yml`` ``commmand`` requires you to kill the container and bring it back up
