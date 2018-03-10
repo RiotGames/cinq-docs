@@ -193,8 +193,8 @@ plugins when it starts to and will install them to the virtual env. This takes a
 The easiest way to propagate the changes is to just restart the container:
 ::
 
-docker-compose restart api
-docker-compose restart scheduler
+    docker-compose restart api
+    docker-compose restart scheduler
 
 Limitations
 -----------
