@@ -23,7 +23,7 @@ Requirements
 How to use this script
 ----------------------
 
-1. Save ``https://raw.githubusercontent.com/RiotGames/cloud-inquisitor/localdev/packer/scripts/setup_localdev.sh`` to the host you want to use as the dev instance.
+1. Save ``https://raw.githubusercontent.com/RiotGames/cloud-inquisitor/master/packer/scripts/setup_localdev.sh`` to the host you want to use as the dev instance.
 2. Go to the directory where the script is saved, ``chmod +x ./setup_localdev.sh`` then ``sudo ./setup_localdev.sh``.
 3. Wait till the script finishes.
 4. Setup your AWS credentials (Optional. See section below)
