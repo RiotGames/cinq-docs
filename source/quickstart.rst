@@ -196,6 +196,7 @@ On the target account, create an IAM role called ``cinq_role`` and attach the `A
                     "iam:DeletePolicy*",
                     "iam:DeleteRolePolicy",
                     "iam:DetachRolePolicy",
+                    "iam:PassRole",
                     "iam:PutRolePolicy",
                     "iam:SetDefaultPolicyVersion",
                     "iam:UpdateAssumeRolePolicy",
