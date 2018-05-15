@@ -46,7 +46,6 @@ It will return a response with a field of CipherTextBlob that you can paste into
 To verify your cinq instance is using KMS, your production settings in ``/path/to/cinq-backend/settings/production.py`` should contain: :: 
 
  USE_USER_DATA = True
- USE_USER_DATA = True
  KMS_ACCOUNT_NAME = '<account_name>'
  USER_DATA_URL = 'http://169.254.169.254/latest/user-data'
 

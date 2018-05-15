@@ -1,7 +1,7 @@
 Backend
 =======
 
-This project provides two of the three pieces needed for the Cloud Inquisitor  system,
+This project provides two of the three pieces needed for the Cloud Inquisitor system,
 namely the API backend service and the scheduler process responsible for fetching and auditing
 accounts. The code is built to be completely modular using ``pkg_resource`` entry points for
 loading modules as needed. This allows you to easily build third-party modules without updating
