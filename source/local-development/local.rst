@@ -4,6 +4,7 @@ Standalone Local Development Environment Setup Script
 =====================================================
 
 Note:
+
 * The instructions here are **NOT** for production. They are strictly for local development.
 * We strongly recommend that you setup this in a VM, as it might change your system configurations and break stuff.
 
@@ -15,7 +16,7 @@ This script is written to meet the need for people who want to setup the environ
 Requirements
 ------------
 
-* Ubuntu 16.04 or higher (We tested this script on Ubuntu 16.04.4 x64)
+* Ubuntu 16.04 or higher (We tested this script on Ubuntu 16.04.4 x64 and Ubuntu 18.04 x64)
 * Internet Access
 * Be able to ``sudo``
 
