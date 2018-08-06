@@ -23,12 +23,12 @@ Requirements
 How to use this script
 ----------------------
 
-1. Save ``https://raw.githubusercontent.com/RiotGames/cloud-inquisitor/master/packer/scripts/setup_localdev.sh`` to the host you want to use as the dev instance
-2. Go to the directory where the script is saved, ``chmod +x ./setup_localdev.sh`` then ``sudo ./setup_localdev.sh``
+1. Clone Cloud inquisitor (``https://github.com/RiotGames/cloud-inquisitor.git``) to the host you want to use as the dev instance
+2. Go to the directory and ``sudo make setup_localdev``. Do not run under ``root`` account.
 3. Wait till the script finishes
 4. Setup your AWS credentials (Optional. See section below)
-5. Run ``/proj/cinq-dev/bin/cloud-inquisitor runserver`` and save the admin credential in the output. You will need this to login the user interface
-6. Now you have a working local dev instance for Cinq development. The project will be saved under ``/proj`` with its virtualenv located at ``/proj/cinq-dev``
+5. Run ``/opt/cinq/cinq-venv/bin/cloud-inquisitor runserver`` and save the admin credential in the output. You will need this to login the user interface
+6. Now you have a working local dev instance for Cinq development. The project will be saved under ``/opt/cinq`` with its virtualenv located at ``/opt/cinq/cinq-venv``
 
 Set up your AWS credentials
 ---------------------------
@@ -59,8 +59,6 @@ Notes
 
 Below are things you might need to pay attention to
 
-* We don't recommend running the script directly under root
-* You probably need to set the working directory to ``/proj`` if you plan to use an IDE to do the development
-* If you'd like to develop other plugins, you need to ``git clone`` them to ``/proj``, ``chdir`` to where ``setup.py`` is located, then ``/proj/cinq-dev/bin/pip3 install -e .``
-* The root password of the MySQL installation is `mypassword`
-* ``/proj/cinq-dev/bin/cloud-inquisitor scheduler`` will run the scheduler for you
+* You probably need to set the working directory to ``/opt/cinq`` if you plan to use an IDE to do the development
+* If you'd like to develop other plugins, you need to clone it from GitHub then install it as well (go to where ``setup.py`` is located, then ``/opt/cinq/cinq-venv/bin/pip3 install -e .``)
+* ``/opt/cinq/cinq-venv/bin/cloud-inquisitor scheduler`` will run the scheduler for you
