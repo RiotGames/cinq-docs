@@ -6,7 +6,8 @@ Standalone Local Development Environment Setup Script
 Note:
 
 * The instructions here are **NOT** for production. They are strictly for local development.
-* We strongly recommend that you setup this in a VM, as it might change your system configurations and break stuff.
+* We strongly recommend that you setup this in a fresh VM, as it might change your system configurations and break stuff.
+* If you already have a running MySQL instance, you need to remove the root password or the setup will fail.
 
 Introduction
 ------------
