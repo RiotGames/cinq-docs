@@ -96,7 +96,9 @@ _______________________
 
 
 Default Schedule for Resources that can only be terminated (S3, ECS, RDS...)
-____________________________________________________________________________
+_______________________
+
+
 +----------+-------------------------------------------------------------------------------------------+
 | Age      | Action                                                                                    |
 +==========+===========================================================================================+
@@ -104,23 +106,23 @@ ____________________________________________________________________________
 +----------+-------------------------------------------------------------------------------------------+
 | 7 days   | Alert the AWS account owner, warning termination of resource(s) will happen in two weeks  |
 +----------+-------------------------------------------------------------------------------------------+
-| 14 days  | Alert the AWS account owner, warning shutdown of resources(s) will happen in one week      |
+| 14 days  | Alert the AWS account owner, warning shutdown of resources(s) will happen in one week     |
 +----------+-------------------------------------------------------------------------------------------+
 | 20 days  | One day prior to removal, a final notice will be sent to the AWS account owner            |
 +----------+-------------------------------------------------------------------------------------------+
-| 21 days  | Delete* the resource and notify AWS account owner                                         |
+| 21 days  | Delete\* the resource and notify AWS account owner                                        |
 +----------+-------------------------------------------------------------------------------------------+
 
-* For some AWS resources that may take a long time to delete (such as S3 buckets with terabytes of data)
+\* For some AWS resources that may take a long time to delete (such as S3 buckets with terabytes of data)
   a lifecycle policy will be applied to delete the data in the bucket prior to actually deleting the bucket.
 
 S3 Bucket Auditor
------------------
+_________________
+
 S3 Buckets have a few quirks when compared to EC2 instances that must be handled differently.
-    - They cannot be shutdown, only deleted
-    - They cannot be deleted if any objects or versions of objects exist in the bucket
-    - API Calls to delete objects or versions in the bucket are blocking client-side, which 
-	  makes deleting a large number of objects from a bucket (100GB+) unreliable
+* They cannot be shutdown, only deleted
+* They cannot be deleted if any objects or versions of objects exist in the bucket
+* API Calls to delete objects or versions in the bucket are blocking client-side, which makes deleting a large number of objects from a bucket (100GB+) unreliable
 
 Because of this, we have decided to delete contents of a bucket by using lifecycle policies. 
 The steps the auditor takes when deleting buckets are:
