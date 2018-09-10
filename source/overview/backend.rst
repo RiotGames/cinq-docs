@@ -113,8 +113,7 @@ _______________________
 | 21 days  | Delete\* the resource and notify AWS account owner                                        |
 +----------+-------------------------------------------------------------------------------------------+
 
-\* For some AWS resources that may take a long time to delete (such as S3 buckets with terabytes of data)
-  a lifecycle policy will be applied to delete the data in the bucket prior to actually deleting the bucket.
+\* For some AWS resources that may take a long time to delete (such as S3 buckets with terabytes of data) a lifecycle policy will be applied to delete the data in the bucket prior to actually deleting the bucket.
 
 S3 Bucket Auditor
 _________________
