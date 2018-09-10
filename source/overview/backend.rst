@@ -70,14 +70,14 @@ More information such as configuration options `here <https://github.com/RiotGam
 Required Tags
 ^^^^^^^^^^^^^
 
-Cloud Inquisitor `audits <https://github.com/RiotGames/cinq-auditor-required-tags>`__ EC2 instances for **tagging compliance** 
-and shutdowns or terminates instances if they are not brought into compliance after a pre-defined amount of time.
+Cloud Inquisitor `audits <https://github.com/RiotGames/cinq-auditor-required-tags>`__ EC2 instances and S3 Buckets for **tagging compliance** 
+and shutdowns or terminates resources if they are not brought into compliance after a pre-defined amount of time.
 
 More information such as configuration options `here <https://github.com/RiotGames/cinq-auditor-required-tags/blob/master/README.rst>`__.
 
 **Note:** This is currently being extended to include all taggable AWS objects.
 
-Default Action Schedule
+Default Schedule for Resources that can be Shutdown
 _______________________
 
 +----------+-------------------------------------------------------------------------------------------+
@@ -93,6 +93,59 @@ _______________________
 +----------+-------------------------------------------------------------------------------------------+
 | 112 days | Terminate the instance and notify AWS account owner                                       |
 +----------+-------------------------------------------------------------------------------------------+
+
+
+Default Schedule for Resources that can only be terminated (S3, ECS, RDS...)
+____________________________________________________________________________
++----------+-------------------------------------------------------------------------------------------+
+| Age      | Action                                                                                    |
++==========+===========================================================================================+
+| 0 days   | Alert the AWS account owner via email.                                                    |
++----------+-------------------------------------------------------------------------------------------+
+| 7 days   | Alert the AWS account owner, warning termination of resource(s) will happen in two weeks  |
++----------+-------------------------------------------------------------------------------------------+
+| 14 days  | Alert the AWS account owner, warning shutdown of resources(s) will happen in one week      |
++----------+-------------------------------------------------------------------------------------------+
+| 20 days  | One day prior to removal, a final notice will be sent to the AWS account owner            |
++----------+-------------------------------------------------------------------------------------------+
+| 21 days  | Delete* the resource and notify AWS account owner                                         |
++----------+-------------------------------------------------------------------------------------------+
+
+* For some AWS resources that may take a long time to delete (such as S3 buckets with terabytes of data)
+  a lifecycle policy will be applied to delete the data in the bucket prior to actually deleting the bucket.
+
+S3 Bucket Auditor
+-----------------
+S3 Buckets have a few quirks when compared to EC2 instances that must be handled differently.
+    - They cannot be shutdown, only deleted
+    - They cannot be deleted if any objects or versions of objects exist in the bucket
+    - API Calls to delete objects or versions in the bucket are blocking client-side, which 
+	  makes deleting a large number of objects from a bucket (100GB+) unreliable
+
+Because of this, we have decided to delete contents of a bucket by using lifecycle policies. 
+The steps the auditor takes when deleting buckets are:
+1. Check to see if the bucket has any objects/versions. `If it's empty, delete the bucket. <https://github.com/RiotGames/cinq-auditor-required-tags/blob/ce577088219ad3a868babdc3d9e4cfeb02ff4329/cinq_auditor_required_tags/providers.py#L162>`__
+2. If the bucket is not empty, iterate through the lifecycle policies to `see if our policy is applied. <https://github.com/RiotGames/cinq-auditor-required-tags/blob/ce577088219ad3a868babdc3d9e4cfeb02ff4329/cinq_auditor_required_tags/providers.py#L180>`__
+3. If the lifecycle policy does not exist, `apply the lifecycle policy to delete data. <https://github.com/RiotGames/cinq-auditor-required-tags/blob/ce577088219ad3a868babdc3d9e4cfeb02ff4329/cinq_auditor_required_tags/providers.py#L188>__`
+4. If a bucket policy to prevent s3:PutObject and s3:GetObject does not exist on the bucket, `apply that policy. <https://github.com/RiotGames/cinq-auditor-required-tags/blob/ce577088219ad3a868babdc3d9e4cfeb02ff4329/cinq_auditor_required_tags/providers.py#L201>__`
+
+This covers a few different edge cases, most notably it allows the auditor to continuously run against the same
+bucket with re-applying the same policies, even if the bucket contains terabytes of data. Applying
+bucket policies to prevent s3:PutObject and s3:GetObject prevents objects from being added to the bucket 
+after the lifecycle policy has been applied, which would lead to the bucket never being deleted.
+
+The default expiration time of objects for the lifecycle policy is three days. If this 
+bucket is being used as a static website or part of any critical service, this gives the service owners
+immediate visibility into the actions that will be soon be taken (bucket deletion) without permanently deleting the content.
+Although at this point the bucket is non-compliant and should be deleted, being able to reverse a live service issue
+caused by the tool is more important than immediately and irrecoverably deleting data.
+
+***If a bucket is tagged properly after the lifecycle policy has already been applied and the bucket has been marked for deletion,
+the auditor will not remove the policies on the bucket. The bucket policy and lifecycle policy must be removed manually.***
+
+At this point in time, the policy itself is not checked to ensure that it matches the one that we apply. This allows a user
+to create a policy with a name that matches our policy, and it would prevent their bucket from being deleted. At this time
+we treat it as an edge case similar to enabling EC2 instance protection, but plan to fix it in the future.
 
 Collectors
 ----------
