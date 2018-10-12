@@ -125,10 +125,14 @@ S3 Buckets have a few quirks when compared to EC2 instances that must be handled
 
 Because of this, we have decided to delete contents of a bucket by using lifecycle policies. 
 The steps the auditor takes when deleting buckets are:
-1. Check to see if the bucket has any objects/versions. `If it's empty, delete the bucket. <https://github.com/RiotGames/cinq-auditor-required-tags/blob/ce577088219ad3a868babdc3d9e4cfeb02ff4329/cinq_auditor_required_tags/providers.py#L162>`__
-2. If the bucket is not empty, iterate through the lifecycle policies to `see if our policy is applied. <https://github.com/RiotGames/cinq-auditor-required-tags/blob/ce577088219ad3a868babdc3d9e4cfeb02ff4329/cinq_auditor_required_tags/providers.py#L180>`__
-3. If the lifecycle policy does not exist, `apply the lifecycle policy to delete data. <https://github.com/RiotGames/cinq-auditor-required-tags/blob/ce577088219ad3a868babdc3d9e4cfeb02ff4329/cinq_auditor_required_tags/providers.py#L188>__`
-4. If a bucket policy to prevent s3:PutObject and s3:GetObject does not exist on the bucket, `apply that policy. <https://github.com/RiotGames/cinq-auditor-required-tags/blob/ce577088219ad3a868babdc3d9e4cfeb02ff4329/cinq_auditor_required_tags/providers.py#L201>__`
+
+1. Check to see if the bucket has any objects/versions. If it's empty, delete the bucket . 
+
+2. If the bucket is not empty, iterate through the lifecycle policies to see if our policy is applied.  
+
+3. If the lifecycle policy does not exist, apply the lifecycle policy to delete data . 
+
+4. If a bucket policy to prevent s3:PutObject and s3:GetObject does not exist on the bucket, apply that policy.  
 
 This covers a few different edge cases, most notably it allows the auditor to continuously run against the same
 bucket with re-applying the same policies, even if the bucket contains terabytes of data. Applying
