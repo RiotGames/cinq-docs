@@ -134,6 +134,8 @@ The steps the auditor takes when deleting buckets are:
 
 4. If a bucket policy to prevent s3:PutObject and s3:GetObject does not exist on the bucket, apply that policy.  
 
+5. If a lifecycle policy to delete version markers does not exist, apply the policy to delete version markers.
+
 This covers a few different edge cases, most notably it allows the auditor to continuously run against the same
 bucket with re-applying the same policies, even if the bucket contains terabytes of data. Applying
 bucket policies to prevent s3:PutObject and s3:GetObject prevents objects from being added to the bucket 
